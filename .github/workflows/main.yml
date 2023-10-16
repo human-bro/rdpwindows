@@ -46,3 +46,8 @@ jobs:
         run: |
           .\ngrok\ngrok.exe tcp 3389
         shell: PowerShell
+
+      - name: Sleep for 60 seconds
+        run: |
+          Start-Sleep -Seconds 60
+        shell: PowerShell
