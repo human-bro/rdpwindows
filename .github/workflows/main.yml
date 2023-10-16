@@ -44,10 +44,18 @@ jobs:
 
       - name: Create Tunnel with ngrok
         run: |
-          .\ngrok\ngrok.exe tcp 3389
+          .\ngrok\ngrok.exe tcp 3389 &
+          $ngrokPid = $LastExitCode
+          Write-Host "ngrok PID: $ngrokPid"
         shell: PowerShell
 
-      - name: Sleep for 60 seconds
+      - name: Sleep for 1 day
         run: |
-          Start-Sleep -Seconds 60
+          Start-Sleep -Seconds $((60 * 60 * 24))  # Sleep for 1 day (24 hours)
+        shell: PowerShell
+
+      - name: Stop ngrok
+        run: |
+          Stop-Process -Id $ngrokPid -Force
+          Write-Host "Stopped ngrok (PID: $ngrokPid)"
         shell: PowerShell
